@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>D-IA | SENAI Guarulhos & Google</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{
+    --bg:#0B0F17; --bg2:#0E1420; --violet:#7C3AED; --violet2:#A855F7;
+    --blue:#2563EB; --sky:#38BDF8; --cyan:#06B6D4; --emerald:#10B981;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; scroll-padding-top:88px}
+  body{background:var(--bg); color:#E7E9EE; font-family:'Inter',sans-serif;}
+  h1,h2,h3,.font-display{font-family:'Sora',sans-serif;}
+  .grain{background-image:radial-gradient(circle at 20% 10%, rgba(124,58,237,.18), transparent 40%), radial-gradient(circle at 85% 20%, rgba(56,189,248,.14), transparent 45%), radial-gradient(circle at 50% 90%, rgba(16,185,129,.10), transparent 40%);}
+  .glass{background:rgba(255,255,255,.045); border:1px solid rgba(255,255,255,.09); backdrop-filter:blur(10px);}
+  .glass:hover{border-color:rgba(168,85,247,.5); box-shadow:0 0 0 1px rgba(168,85,247,.25), 0 20px 40px -20px rgba(124,58,237,.35);}
+  .glow-line{background:linear-gradient(90deg,var(--violet2),var(--sky),var(--emerald));}
+  .tab-btn.active{background:linear-gradient(90deg,var(--violet),var(--blue)); color:#fff;}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+  .acc-content{max-height:0; overflow:hidden; transition:max-height .3s ease}
+  .acc-btn.open .chev{transform:rotate(180deg)}
+  .num-tag{font-family:'Sora',sans-serif;}
+  ::selection{background:var(--violet); color:#fff}
+  .nav-link{position:relative}
+  .nav-link::after{content:'';position:absolute;left:0;bottom:-4px;width:0;height:2px;background:var(--sky);transition:.25s}
+  .nav-link:hover::after{width:100%}
+  .site-header{background:rgba(11,15,23,.82); backdrop-filter:blur(14px); border-bottom:1px solid rgba(255,255,255,.08)}
+  .avatar{position:relative; width:5rem; height:5rem; flex-shrink:0; border-radius:9999px; overflow:hidden; display:grid; place-items:center; font:700 1.5rem 'Sora',sans-serif; color:#fff; box-shadow:0 0 0 2px rgba(255,255,255,.12)}
+  .avatar img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--sky); outline-offset:3px; border-radius:8px}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto} *{transition:none!important}}
+</style>
+</head>
+<body class="grain">
+
+<!-- HEADER -->
+<header class="fixed top-0 inset-x-0 z-50" style="padding-top:env(safe-area-inset-top,0px)">
+  <div class="site-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <a href="#top" class="flex items-center gap-3 shrink-0" aria-label="D-IA · SENAI Guarulhos e Google">
+        <span class="grid place-items-center w-10 h-10 rounded-xl font-display font-extrabold text-[13px] text-white" style="background:linear-gradient(135deg,var(--violet),var(--blue))">D-IA</span>
+        <span class="flex flex-col leading-tight whitespace-nowrap">
+          <span class="font-display font-bold text-[15px]">D-IA 2026</span>
+          <span class="text-[11px] text-white/55">SENAI Guarulhos × Google</span>
+        </span>
+      </a>
+      <nav class="hidden xl:flex items-center gap-6 text-sm text-white/75 whitespace-nowrap" aria-label="Principal">
+        <a class="nav-link" href="#esquenta">Esquenta</a>
+        <a class="nav-link" href="#logistica">Logística</a>
+        <a class="nav-link" href="#turmas">Turmas</a>
+        <a class="nav-link" href="#espacos">Espaços</a>
+        <a class="nav-link" href="#programacao">Programação</a>
+        <a class="nav-link" href="#facilitadores">Facilitadores</a>
+        <a class="nav-link text-violet-300 font-medium" href="#brindes">🎁 Brindes</a>
+        <a class="nav-link" href="#socorro-ti">Socorro TI</a>
+        <a class="nav-link" href="#faq">FAQ</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="https://mail.google.com/" target="_blank" rel="noopener" class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold px-5 py-2.5 rounded-full text-white shadow-lg shadow-violet-900/30 hover:brightness-110 transition" style="background:linear-gradient(90deg,var(--violet),var(--blue))" title="Acessar e-mail @edu.senai.br">Acessar e-mail</a>
+        <button id="menuBtn" class="xl:hidden w-10 h-10 grid place-items-center rounded-lg text-white/85 hover:bg-white/10" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileMenu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobileMenu" class="hidden xl:hidden border-t border-white/10 px-4 sm:px-6 py-3 grid grid-cols-2 gap-x-4 text-sm text-white/85">
+      <a class="py-3" href="#esquenta">Esquenta</a><a class="py-3" href="#logistica">Logística</a>
+      <a class="py-3" href="#turmas">Divisão das turmas</a><a class="py-3" href="#espacos">Espaços</a>
+      <a class="py-3" href="#programacao">Programação</a><a class="py-3" href="#facilitadores">Facilitadores</a>
+      <a class="py-3" href="#socorro-ti">Socorro TI</a><a class="py-3" href="#faq">FAQ</a>
+      <a class="py-3 text-violet-300 font-medium" href="#brindes">🎁 Brindes</a>
+      <a href="https://mail.google.com/" target="_blank" rel="noopener" class="col-span-2 mt-2 text-center font-semibold px-4 py-3 rounded-full text-white" style="background:linear-gradient(90deg,var(--violet),var(--blue))">Acessar e-mail @edu.senai.br</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="pt-32 sm:pt-40 pb-14 px-5">
+  <div class="max-w-5xl mx-auto text-center">
+    <span class="inline-flex items-center gap-2 text-xs font-medium px-4 py-1.5 rounded-full glass text-sky-300">⚡ Evento Presencial Híbrido · SENAI Guarulhos + Google</span>
+    <h1 class="font-display font-extrabold text-4xl sm:text-6xl mt-6 leading-[1.05]">
+      D-IA: um dia inteiro dedicado à <span style="background:linear-gradient(90deg,var(--violet2),var(--sky));-webkit-background-clip:text;background-clip:text;color:transparent">Inteligência Artificial</span>
+    </h1>
+    <p class="text-white/60 text-lg mt-5 max-w-2xl mx-auto">Sua jornada prática com Inteligência Artificial e Google Gemini no SENAI "Hermenegildo Campos de Almeida".</p>
+
+    <div class="mt-9 flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="#esquenta" class="text-center font-semibold px-7 py-3.5 rounded-full text-white shadow-lg shadow-violet-900/30 hover:brightness-110 transition" style="background:linear-gradient(90deg,var(--violet),var(--blue))">Fazer o esquenta</a>
+      <a href="#programacao" class="text-center font-semibold px-7 py-3.5 rounded-full glass text-white/90">Ver programação</a>
+    </div>
+  </div>
+</section>
+
+<!-- ESSENCIAL -->
+<section id="essencial" class="px-5 pb-16">
+  <h2 class="sr-only">O essencial para participar</h2>
+  <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-5">
+    <div id="byod" class="glass rounded-2xl p-6 border-l-4" style="border-left-color:var(--sky)">
+      <p class="text-2xl mb-3">📱</p>
+      <h3 class="font-semibold mb-2 text-sky-300">Ação BYOD: traga seu celular</h3>
+      <p class="text-sm text-white/70 leading-relaxed">O foco do evento são os celulares. Quem estiver com o seu poderá se conectar a uma <strong class="text-white">rede visitante</strong>, criada no dia pela <strong class="text-white">GSTI</strong>.</p>
+    </div>
+    <div id="brindes" class="rounded-2xl p-6 glass border-l-4" style="border-left-color:var(--violet2);background:linear-gradient(135deg,rgba(124,58,237,.22),rgba(37,99,235,.12))">
+      <p class="text-2xl mb-3">🎁</p>
+      <h3 class="font-semibold mb-2 text-violet-200">Brindes do Google</h3>
+      <p class="text-sm text-white/75 leading-relaxed">Na ativação, a Google distribui brindes, mas <strong class="text-white">só para quem fizer as ativações</strong>. Ela é liberada depois da MasterClass.</p>
+    </div>
+    <div class="glass rounded-2xl p-6 border-l-4" style="border-left-color:var(--emerald)">
+      <p class="text-2xl mb-3">🚨</p>
+      <h3 class="font-semibold mb-2 text-emerald-300">Use a conta @edu.senai.br</h3>
+      <p class="text-sm text-white/70 leading-relaxed">Contas pessoais @gmail.com <strong class="text-white">não terão acesso</strong> aos laboratórios e experiências do evento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOGISTICA -->
+<section id="logistica" class="py-16 px-5 border-t border-white/5">
+  <div class="max-w-5xl mx-auto">
+    <p class="text-xs uppercase tracking-wide text-violet-300 mb-2">Fluxo interno do evento</p>
+    <h2 class="font-display font-bold text-3xl mb-8">Logística e orientação</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="glass rounded-2xl p-6"><p class="text-2xl mb-3">⏱️</p><h3 class="font-semibold mb-2">Pontualidade interna</h3><p class="text-sm text-white/65">A saída da sala ocorre exatamente 30 minutos antes do início da sessão - Manhã às 08h00, Tarde às 13h30. O professor da disciplina atual guia a turma até o espaço.</p></div>
+      <div class="glass rounded-2xl p-6"><p class="text-2xl mb-3">🎒</p><h3 class="font-semibold mb-2">Checklist obrigatório</h3><p class="text-sm text-white/65">Smartphone carregado a 100% e login feito na conta @edu.senai.br. No dia, conecte o celular na rede visitante criada pela GSTI.</p></div>
+      <div class="glass rounded-2xl p-6 border-l-4" style="border-left-color:var(--emerald)"><p class="text-2xl mb-3">📱</p><h3 class="font-semibold mb-2">Faça isso antes do dia</h3><p class="text-sm text-white/65">Adicione a conta <strong class="text-white">@edu.senai.br</strong> ao perfil de contas do seu smartphone com antecedência. Assim você alterna entre o uso pessoal e institucional sem perder tempo no dia do evento.</p></div>
+    </div>
+    <div class="glass rounded-2xl p-6 mt-5">
+      <h3 class="font-semibold mb-3">🧭 Ordem das atividades</h3>
+      <ol class="space-y-3 text-sm text-white/75">
+        <li class="flex gap-3"><span class="num-tag font-bold text-violet-300">1</span><p><strong class="text-white">MasterClass:</strong> todos começam por ela, no espaço da sua turma.</p></li>
+        <li class="flex gap-3"><span class="num-tag font-bold text-violet-300">2</span><p><strong class="text-white">Ativação:</strong> só é liberada depois de participar da MasterClass. É nela que você ganha o brinde do Google.</p></li>
+      </ol>
+      <p class="mt-4 pt-4 border-t border-white/10 text-sm flex flex-wrap items-center gap-x-3 gap-y-2"><span class="text-white/40">Workshop: ainda em definição.</span> <span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- TURMAS -->
+<section id="turmas" class="py-16 px-5 border-t border-white/5">
+  <div class="max-w-5xl mx-auto">
+    <p class="text-xs uppercase tracking-wide text-sky-300 mb-2">Distribuição oficial</p>
+    <h2 class="font-display font-bold text-3xl mb-2">Onde sua turma assiste à MasterClass</h2>
+    <p class="text-white/55 text-sm mb-8">Toque em um turno para ver a alocação por espaço.</p>
+
+    <div class="flex gap-2 mb-6">
+      <button data-tab="manha-turma" class="tab-tbtn tab-btn active glass px-5 py-2 rounded-full text-sm font-medium">☀️ Manhã</button>
+      <button data-tab="tarde-turma" class="tab-tbtn tab-btn glass px-5 py-2 rounded-full text-sm font-medium">🌆 Tarde</button>
+    </div>
+
+    <div id="manha-turma" class="tab-panel active">
+      <div class="glass rounded-2xl p-6">
+        <div class="flex items-baseline justify-between gap-3 mb-1">
+          <h3 class="font-semibold text-base text-sky-300">Auditório Principal</h3>
+          <span class="text-xs text-white/35 shrink-0">233 de 258 lugares</span>
+        </div>
+        <p class="text-xs text-white/40 mb-4">Deslocamento 08h00 · Início 08h30</p>
+        <div class="grid sm:grid-cols-2 gap-x-8 gap-y-2 text-sm text-white/75">
+          <p>Eletricista de Manutenção - 32</p><p>Mecânico de Usinagem - 62</p>
+          <p>Mecânico de Usinagem Convencional - 13</p><p>Administração (Téc.) - 18</p>
+          <p>Mecatrônica (Téc.) Manhã - 30</p><p>Qualidade (Téc.) - 16</p>
+          <p>Eletromecânica (Téc.) Manhã - 16</p>
+          <p>Desenvolvimento de Sistemas - Integral - 32</p>
+          <p>Mecatrônica - Integral - 64</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="tarde-turma" class="tab-panel">
+      <p class="text-xs text-white/40 mb-4">Deslocamento 13h30 · Início 14h00 - distribuído em 3 espaços</p>
+      <div class="grid md:grid-cols-3 gap-5">
+        <div class="glass rounded-2xl p-5">
+          <div class="flex items-baseline justify-between gap-2 mb-3"><h3 class="font-semibold text-sm text-sky-300">Auditório Principal</h3><span class="text-xs text-white/35 shrink-0">236/258</span></div>
+          <ul class="text-sm text-white/70 space-y-1"><li>Mecânico de Usinagem - 117</li><li>Eletricista de Manutenção - 75</li><li>Eletromecânica (Téc.) 16h30 - 31</li><li>Eletromecânica (Téc.) 17h30 - 13</li></ul></div>
+        <div class="glass rounded-2xl p-5">
+          <div class="flex items-baseline justify-between gap-2 mb-3"><h3 class="font-semibold text-sm text-violet-300">Mini Auditório</h3><span class="text-xs text-white/35 shrink-0">35/40</span></div>
+          <ul class="text-sm text-white/70 space-y-1"><li>Administração (Téc.) - Grupo A - 35</li></ul></div>
+        <div class="glass rounded-2xl p-5">
+          <div class="flex items-baseline justify-between gap-2 mb-3"><h3 class="font-semibold text-sm text-emerald-300">Sala BE 107</h3><span class="text-xs text-white/35 shrink-0">31/32</span></div>
+          <ul class="text-sm text-white/70 space-y-1"><li>Administração (Téc.) - Grupo B - 31</li><li class="text-white/45">Transmissão simultânea da MasterClass</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESPACOS -->
+<section id="espacos" class="py-16 px-5 border-t border-white/5">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="font-display font-bold text-3xl mb-8">Guia de espaços e capacidade</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Auditório Principal</h3><p class="text-sm text-white/60">258 lugares · MasterClass manhã e tarde</p></div>
+      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Mini Auditório</h3><p class="text-sm text-white/60">40 lugares · MasterClass da tarde</p></div>
+      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Sala BE 107</h3><p class="text-sm text-white/60">32 lugares · Transmissão simultânea ao vivo</p></div>
+      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Foyer do Auditório</h3><p class="text-sm text-white/60">Ativação prática contínua Gemini - tablets, TVs e demos, 10h–19h</p><p class="text-xs text-violet-300 mt-2">🎁 Brinde Google para quem fizer a ativação</p></div>
+      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Biblioteca</h3><p class="text-sm text-white/60">Ativação prática silenciosa e espaço hands-on</p><p class="text-xs text-violet-300 mt-2">🎁 Brinde Google para quem fizer a ativação</p></div>
+      <div class="glass rounded-2xl p-6"><div class="opacity-45"><h3 class="font-semibold mb-1">Laboratório Dev</h3><p class="text-sm text-white/60">64 computadores para workshops práticos</p></div><p class="mt-3"><span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMACAO -->
+<section id="programacao" class="py-16 px-5 border-t border-white/5">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-display font-bold text-3xl mb-8">Programação</h2>
+    <div class="flex gap-2 mb-6">
+      <button data-tab="manha-prog" class="tab-pbtn tab-btn active glass px-5 py-2 rounded-full text-sm font-medium">Manhã</button>
+      <button data-tab="tarde-prog" class="tab-pbtn tab-btn glass px-5 py-2 rounded-full text-sm font-medium">Tarde</button>
+    </div>
+    <div id="manha-prog" class="tab-panel active glass rounded-2xl p-6 divide-y divide-white/8">
+      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-sky-300 text-sm font-medium">08h00</span><p class="text-sm text-white/75">Deslocamento guiado até o Auditório Principal</p></div>
+      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-sky-300 text-sm font-medium">08h30–10h30</span><p class="text-sm text-white/75">MasterClass ao vivo com o time Google - Inteligência Artificial</p></div>
+      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-sky-300 text-sm font-medium">10h00–19h00</span><p class="text-sm text-white/75">Ativação prática no Foyer e na Biblioteca <span class="text-violet-300">· liberada após a MasterClass · 🎁 brinde Google só para quem participar</span></p></div>
+      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-amber-300 text-sm font-medium opacity-45">10h30–12h00</span><div><p class="text-sm text-white/75 opacity-45">Workshop prático nos laboratórios de TI e no Lab Dev (64 PCs)</p><p class="mt-1.5"><span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p></div></div>
+    </div>
+    <div id="tarde-prog" class="tab-panel glass rounded-2xl p-6 divide-y divide-white/8">
+      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-violet-300 text-sm font-medium">13h30</span><p class="text-sm text-white/75">Deslocamento guiado até Auditório, Mini Auditório e Sala BE 107</p></div>
+      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-violet-300 text-sm font-medium">14h00–15h30</span><p class="text-sm text-white/75">MasterClass da tarde com o time Google</p></div>
+      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-amber-300 text-sm font-medium opacity-45">15h30–17h00</span><div><p class="text-sm text-white/75 opacity-45">Workshop prático hands-on nos laboratórios</p><p class="mt-1.5"><span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ESQUENTA -->
+<section id="esquenta" class="py-16 px-5 border-t border-white/5">
+  <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+    <div>
+      <h2 class="font-display font-bold text-3xl mb-6">🔥 O Esquenta</h2>
+      <ol class="space-y-4">
+        <li class="flex gap-4"><span class="num-tag font-bold text-violet-300">1</span><p class="text-sm text-white/75">Instale o app <strong class="text-white">Google Gemini</strong> no seu smartphone.</p></li>
+        <li class="flex gap-4"><span class="num-tag font-bold text-violet-300">2</span><p class="text-sm text-white/75">Faça login usando sua conta <strong class="text-white">@edu.senai.br</strong> completa.</p></li>
+        <li class="flex gap-4"><span class="num-tag font-bold text-violet-300">3</span><p class="text-sm text-white/75">Valide o acesso antes do dia do evento, com calma.</p></li>
+      </ol>
+    </div>
+    <a href="#socorro-ti" class="glass rounded-2xl p-6 border-l-4 block" style="border-left-color:var(--sky)">
+      <h3 class="font-semibold mb-2 text-sky-300">Deu erro no login?</h3>
+      <p class="text-sm text-white/70">Não deixe para o dia do evento. Veja como pedir ajuda em <strong class="text-white">Socorro TI</strong>.</p>
+    </a>
+  </div>
+</section>
+
+<!-- SOCORRO TI -->
+<section id="socorro-ti" class="py-16 px-5 border-t border-white/5">
+  <div class="max-w-4xl mx-auto">
+    <h2 class="font-display font-bold text-3xl mb-2">🆘 Socorro TI</h2>
+    <p class="text-white/65 mb-8">Está com problema para realizar o login ou acessar sua conta educacional?</p>
+    <div class="grid md:grid-cols-5 gap-5">
+      <div class="md:col-span-3 glass rounded-2xl p-6 space-y-4 text-sm text-white/75 leading-relaxed">
+        <p><strong class="text-white">Procure primeiro o docente referencial da sua turma.</strong> Ele irá verificar a situação e tomar as providências necessárias para o atendimento do problema.</p>
+        <p>É importante que todas as contas estejam funcionando corretamente antes do evento.</p>
+        <p>Caso seja necessário abrir um chamado junto à TI, o docente orientará você sobre os próximos passos.</p>
+      </div>
+      <div class="md:col-span-2 glass rounded-2xl p-6 border-l-4" style="border-left-color:var(--sky)">
+        <h3 class="font-semibold text-sky-300 mb-3">Tenha em mãos</h3>
+        <ul class="space-y-2 text-sm text-white/75">
+          <li>✅ Nome completo</li><li>✅ CPF</li><li>✅ E-mail de contato</li><li>✅ Código da turma</li><li>✅ Print da mensagem de erro</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FACILITADORES -->
+<section id="facilitadores" class="py-16 px-5 border-t border-white/5">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="font-display font-bold text-3xl mb-8">Facilitadores</h2>
+    <!-- Fotos: quadradas (ex.: 400x400) em img/facilitadores/. O CSS (.avatar) deixa redonda. Troque SOBRENOME pelo sobrenome real. -->
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <article class="glass rounded-2xl p-5 flex items-center gap-4">
+        <div class="avatar" style="background:linear-gradient(135deg,var(--violet),var(--sky))">E
+          <img src="img/facilitadores/eduardo.jpg" alt="Foto de Eduardo" width="400" height="400" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="min-w-0"><h3 class="font-semibold">Eduardo <span>Falabella</span></h3><p class="text-sm text-white/55"></p></div>
+      </article>
+      <article class="glass rounded-2xl p-5 flex items-center gap-4">
+        <div class="avatar" style="background:linear-gradient(135deg,var(--emerald),var(--sky))">C
+          <img src="img/facilitadores/claudiane.jpg" alt="Foto de Claudiane" width="400" height="400" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="min-w-0"><h3 class="font-semibold">Claudiane <span>Alves</span></h3><p class="text-sm text-white/55"></p></div>
+      </article>
+      <article class="glass rounded-2xl p-5 flex items-center gap-4">
+        <div class="avatar" style="background:linear-gradient(135deg,var(--blue),var(--violet2))">A
+          <img src="img/facilitadores/ailton.jpg" alt="Foto de Ailton" width="400" height="400" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="min-w-0"><h3 class="font-semibold">Ailton <span>Fernandes</span></h3><p class="text-sm text-white/55"></p></div>
+      </article>
+      <article class="glass rounded-2xl p-5 flex items-center gap-4">
+        <div class="avatar" style="background:linear-gradient(135deg,var(--cyan),var(--violet))">G
+          <img src="img/facilitadores/gilberto.jpg" alt="Foto de Gilberto" width="400" height="400" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="min-w-0"><h3 class="font-semibold">Fagner <span>Cavalcante</span></h3><p class="text-sm text-white/55"></p></div>
+      </article>
+      <article class="glass rounded-2xl p-5 flex items-center gap-4">
+        <div class="avatar" style="background:linear-gradient(135deg,var(--sky),var(--emerald))">F
+          <img src="img/facilitadores/fortini.jpg" alt="Foto de Fortini" width="400" height="400" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="min-w-0"><h3 class="font-semibold">Diego <span>Fortini</span></h3><p class="text-sm text-white/55"></p></div>
+      </article>
+      <article class="glass rounded-2xl p-5 flex items-center gap-4">
+        <div class="avatar" style="background:linear-gradient(135deg,var(--violet2),var(--blue))">R
+          <img src="img/facilitadores/rubem.jpg" alt="Foto de Rubem" width="400" height="400" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="min-w-0"><h3 class="font-semibold">Ruben <span>Batista</span></h3><p class="text-sm text-white/55"></p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="py-16 px-5 border-t border-white/5">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="font-display font-bold text-3xl mb-8">Perguntas frequentes</h2>
+    <div id="faqList" class="space-y-3"></div>
+  </div>
+</section>
+
+<footer class="py-10 px-5 border-t border-white/10 text-center">
+  <p class="glow-line h-0.5 w-24 mx-auto rounded-full mb-6"></p>
+  <p class="font-display font-semibold">SENAI Guarulhos <span class="text-white/40">×</span> Google Brasil</p>
+  <p class="text-xs text-white/40 mt-2">D-IA - Dia da Inteligência Artificial</p>
+</footer>
+
+<script>
+const menuBtn = document.getElementById('menuBtn'), mobileMenu = document.getElementById('mobileMenu');
+menuBtn.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('hidden') === false;
+  menuBtn.setAttribute('aria-expanded', open);
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { mobileMenu.classList.add('hidden'); menuBtn.setAttribute('aria-expanded', false); }));
+
+function wireTabs(selector){
+  document.querySelectorAll(selector).forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const group = btn.parentElement.querySelectorAll(selector);
+      group.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const id = btn.dataset.tab;
+      const panels = document.querySelectorAll('#'+id).length ? document.querySelectorAll('#'+group[0].dataset.tab+', #'+group[1].dataset.tab) : [];
+      group.forEach(b=>{
+        const p = document.getElementById(b.dataset.tab);
+        if(p) p.classList.toggle('active', b===btn);
+      });
+    });
+  });
+}
+wireTabs('.tab-tbtn');
+wireTabs('.tab-pbtn');
+
+const faqs = [
+  {q:"Preciso levar meu celular? Como me conecto à internet?", a:"Sim. O D-IA é uma ação BYOD (Bring Your Own Device), por isso o foco são os celulares. Quem estiver com o celular poderá se conectar em uma rede visitante, que será criada no dia pela GSTI."},
+  {q:"Quem ganha os brindes do Google?", a:"Os brindes são entregues na ativação, e só para quem fizer as ativações. A ativação é liberada depois que você participa da MasterClass."},
+  {q:"O que é o D-IA (Dia da Inteligência Artificial)?", a:"É um evento presencial em parceria com o Google, realizado simultaneamente em todas as unidades SENAI, para apresentar a Inteligência Artificial Generativa como ferramenta de apoio à aprendizagem e aos estudos."},
+  {q:"Qual é a diferença entre MasterClass, Workshop e Ativação?", a:"MasterClass é a palestra/transmissão conceitual ministrada por especialistas do Google. Workshop é a aula prática nos computadores, aplicando soluções de IA (ainda em definição, aguardando aprovação). Ativação é a experimentação em tablets e celulares, acompanhada pelos facilitadores, e só é liberada depois que você participa da MasterClass."},
+  {q:"Quais temas de Inteligência Artificial serão abordados?", a:"O evento cobre vários temas dentro do universo da IA - assistentes inteligentes como o Gemini, geração de texto e imagem, automação de tarefas do dia a dia e boas práticas de uso responsável. Tudo aplicado à rotina de estudos."},
+  {q:"Por que devo usar a conta @edu.senai.br?", a:"Somente a conta institucional tem acesso liberado aos laboratórios, aplicativos e experiências do evento. Contas pessoais @gmail.com não funcionarão nas atividades."},
+  {q:"Sou aluno de curso integral, em qual turno assisto à MasterClass?", a:"Alunos de Desenvolvimento de Sistemas e Mecatrônica Integral participam da MasterClass no turno da manhã (deslocamento 08h00, início 08h30) no Auditório Principal, mantendo o acompanhamento normal das disciplinas à tarde."},
+  {q:"Não sei meu e-mail institucional ou deu erro de acesso, como resolver?", a:"Procure primeiro o docente referencial da sua turma. Ele verifica a situação e, se for preciso abrir um chamado com a TI, orienta você nos próximos passos. Tenha em mãos: nome completo, CPF, e-mail de contato, código da turma e print do erro."}
+];
+const list = document.getElementById('faqList');
+faqs.forEach((f,i)=>{
+  const item = document.createElement('div');
+  item.className = 'glass rounded-2xl overflow-hidden';
+  item.innerHTML = `
+    <button class="acc-btn w-full text-left px-5 py-4 flex justify-between items-center gap-4">
+      <span class="font-medium text-sm sm:text-base">${f.q}</span>
+      <span class="chev text-white/50 transition-transform">▾</span>
+    </button>
+    <div class="acc-content px-5"><p class="text-sm text-white/65 pb-4 leading-relaxed">${f.a}</p></div>`;
+  list.appendChild(item);
+  const btn = item.querySelector('.acc-btn');
+  const content = item.querySelector('.acc-content');
+  btn.addEventListener('click', ()=>{
+    const isOpen = btn.classList.contains('open');
+    document.querySelectorAll('.acc-btn.open').forEach(b=>{ b.classList.remove('open'); b.nextElementSibling.style.maxHeight=null; });
+    if(!isOpen){ btn.classList.add('open'); content.style.maxHeight = content.scrollHeight+'px'; }
+  });
+});
+</script>
+</body>
+</html>
