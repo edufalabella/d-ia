@@ -81,6 +81,25 @@
 
   .esq-confetti{position:fixed; top:-10px; font-size:20px; pointer-events:none; z-index:80; animation:esqFall linear forwards}
   @keyframes esqFall{to{transform:translateY(105vh) rotate(360deg); opacity:.2}}
+
+  /* Event-type system: MasterClass / Ativação / Workshop — same colors everywhere */
+  .ev-chip{display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600; padding:3px 10px; border-radius:9999px; white-space:nowrap; letter-spacing:.01em}
+  .ev-all{color:#E7E9EE; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.25)}
+  .ev-master{color:#7DD3FC; background:rgba(56,189,248,.14); border:1px solid rgba(56,189,248,.35)}
+  .ev-ativ{color:#D8B4FE; background:rgba(168,85,247,.14); border:1px solid rgba(168,85,247,.35)}
+  .ev-work{color:#FCD34D; background:rgba(252,211,77,.12); border:1px solid rgba(252,211,77,.35)}
+  .ev-row{border-left:3px solid transparent; padding-left:14px; margin-left:-14px; transition:opacity .2s ease, max-height .25s ease}
+  .ev-row.ev-row-master{border-left-color:var(--sky)}
+  .ev-row.ev-row-ativ{border-left-color:var(--violet2)}
+  .ev-row.ev-row-work{border-left-color:#FCD34D}
+  .ev-row.ev-hidden{display:none}
+
+  /* clickable legend filter chips */
+  .ev-filter{cursor:pointer; border:none; transition:transform .15s ease, filter .15s ease, opacity .15s ease}
+  .ev-filter:hover{transform:translateY(-1px)}
+  .ev-filter.is-dim{opacity:.35; filter:grayscale(.4)}
+  .ev-filter.is-active{box-shadow:0 0 0 2px rgba(255,255,255,.55) inset}
+  .ev-filter-hint{font-size:11px}
 </style>
 </head>
 <body class="grain">
@@ -180,12 +199,12 @@
       <div class="glass rounded-2xl p-6 border-l-4" style="border-left-color:var(--emerald)"><p class="text-2xl mb-3">📱</p><h3 class="font-semibold mb-2">Faça isso antes do dia</h3><p class="text-sm text-white/65">Adicione a conta <strong class="text-white">@edu.senai.br</strong> ao perfil de contas do seu smartphone com antecedência. Assim você alterna entre o uso pessoal e institucional sem perder tempo no dia do evento.</p></div>
     </div>
     <div class="glass rounded-2xl p-6 mt-5">
-      <h3 class="font-semibold mb-3">🧭 Ordem das atividades</h3>
-      <ol class="space-y-3 text-sm text-white/75">
-        <li class="flex gap-3"><span class="num-tag font-bold text-violet-300">1</span><p><strong class="text-white">MasterClass:</strong> todos começam por ela, no espaço da sua turma.</p></li>
-        <li class="flex gap-3"><span class="num-tag font-bold text-violet-300">2</span><p><strong class="text-white">Ativação:</strong> só é liberada depois de participar da MasterClass. É nela que você ganha o brinde do Google.</p></li>
+      <h3 class="font-semibold mb-4">🧭 Ordem das atividades · 3 eventos separados</h3>
+      <ol class="space-y-4 text-sm text-white/75">
+        <li class="ev-row ev-row-master flex gap-3 items-start"><span class="num-tag font-bold text-sky-300">1</span><p><span class="ev-chip ev-master mb-1.5">🎤 MasterClass</span><br>Todos começam por ela, no espaço da sua turma.</p></li>
+        <li class="ev-row ev-row-ativ flex gap-3 items-start"><span class="num-tag font-bold text-violet-300">2</span><p><span class="ev-chip ev-ativ mb-1.5">🧪 Ativação</span><br>Na Biblioteca, das 10h00 às 19h00. Só é liberada depois da MasterClass — é nela que você ganha o brinde do Google.</p></li>
+        <li class="ev-row ev-row-work flex gap-3 items-start opacity-70"><span class="num-tag font-bold text-amber-300">3</span><p><span class="ev-chip ev-work mb-1.5">💻 Workshop</span> <span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap align-middle">Aguardando aprovação</span><br>Prático nos laboratórios, ainda em definição.</p></li>
       </ol>
-      <p class="mt-4 pt-4 border-t border-white/10 text-sm flex flex-wrap items-center gap-x-3 gap-y-2"><span class="text-white/40">Workshop: ainda em definição.</span> <span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p>
     </div>
   </div>
 </section>
@@ -243,12 +262,11 @@
   <div class="max-w-5xl mx-auto">
     <h2 class="font-display font-bold text-3xl mb-8">Guia de espaços e capacidade</h2>
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Auditório Principal</h3><p class="text-sm text-white/60">258 lugares · MasterClass manhã e tarde</p></div>
-      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Mini Auditório</h3><p class="text-sm text-white/60">40 lugares · MasterClass manhã e tarde</p></div>
-      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Sala BE 107</h3><p class="text-sm text-white/60">32 lugares · Transmissão simultânea ao vivo</p></div>
-      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Foyer do Auditório</h3><p class="text-sm text-white/60">Ativação prática contínua Gemini - tablets, TVs e demos, 10h–19h</p><p class="text-xs text-violet-300 mt-2">🎁 Brinde Google para quem fizer a ativação</p></div>
-      <div class="glass rounded-2xl p-6"><h3 class="font-semibold mb-1">Biblioteca</h3><p class="text-sm text-white/60">Ativação prática silenciosa e espaço hands-on</p><p class="text-xs text-violet-300 mt-2">🎁 Brinde Google para quem fizer a ativação</p></div>
-      <div class="glass rounded-2xl p-6"><div class="opacity-45"><h3 class="font-semibold mb-1">Laboratório Dev</h3><p class="text-sm text-white/60">64 computadores para workshops práticos</p></div><p class="mt-3"><span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p></div>
+      <div class="ev-row ev-row-master glass rounded-2xl p-6"><span class="ev-chip ev-master mb-2">🎤 MasterClass</span><h3 class="font-semibold mb-1">Auditório Principal</h3><p class="text-sm text-white/60">258 lugares · manhã e tarde</p></div>
+      <div class="ev-row ev-row-master glass rounded-2xl p-6"><span class="ev-chip ev-master mb-2">🎤 MasterClass</span><h3 class="font-semibold mb-1">Mini Auditório</h3><p class="text-sm text-white/60">40 lugares · manhã e tarde</p></div>
+      <div class="ev-row ev-row-master glass rounded-2xl p-6"><span class="ev-chip ev-master mb-2">🎤 MasterClass</span><h3 class="font-semibold mb-1">Sala BE 107</h3><p class="text-sm text-white/60">32 lugares · transmissão simultânea ao vivo</p></div>
+      <div class="ev-row ev-row-ativ glass rounded-2xl p-6"><span class="ev-chip ev-ativ mb-2">🧪 Ativação</span><h3 class="font-semibold mb-1">Biblioteca</h3><p class="text-sm text-white/60">Única sede da ativação prática · 10h–19h · espaço hands-on</p><p class="text-xs text-violet-300 mt-2">🎁 Brinde Google para quem participar</p></div>
+      <div class="ev-row ev-row-work glass rounded-2xl p-6"><div class="opacity-45"><span class="ev-chip ev-work mb-2">💻 Workshop</span><h3 class="font-semibold mb-1">Laboratório Dev e Lab TI</h3><p class="text-sm text-white/60">64 computadores para workshops práticos</p></div><p class="mt-3"><span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p></div>
     </div>
   </div>
 </section>
@@ -256,21 +274,80 @@
 <!-- PROGRAMACAO -->
 <section id="programacao" class="py-16 px-5 border-t border-white/5">
   <div class="max-w-4xl mx-auto">
-    <h2 class="font-display font-bold text-3xl mb-8">Programação</h2>
+    <h2 class="font-display font-bold text-3xl mb-4">Programação</h2>
+
+    <!-- Legenda: 3 eventos distintos · também funciona como filtro -->
+    <div class="flex flex-wrap items-center gap-2 mb-2" role="group" aria-label="Filtrar por tipo de evento">
+      <button type="button" data-filter="all" class="ev-chip ev-all ev-filter is-active" aria-pressed="true">Todos</button>
+      <button type="button" data-filter="master" class="ev-chip ev-master ev-filter" aria-pressed="false">🎤 MasterClass</button>
+      <button type="button" data-filter="ativ" class="ev-chip ev-ativ ev-filter" aria-pressed="false">🧪 Ativação</button>
+      <button type="button" data-filter="work" class="ev-chip ev-work ev-filter" aria-pressed="false">💻 Workshop</button>
+    </div>
+    <p class="ev-filter-hint text-white/35 mb-6">Toque em um evento para filtrar a programação · toque em "Todos" para ver tudo de novo</p>
+
     <div class="flex gap-2 mb-6">
       <button data-tab="manha-prog" class="tab-pbtn tab-btn active glass px-5 py-2 rounded-full text-sm font-medium">Manhã</button>
       <button data-tab="tarde-prog" class="tab-pbtn tab-btn glass px-5 py-2 rounded-full text-sm font-medium">Tarde</button>
     </div>
+
     <div id="manha-prog" class="tab-panel active glass rounded-2xl p-6 divide-y divide-white/8">
-      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-sky-300 text-sm font-medium">08h00</span><p class="text-sm text-white/75">Deslocamento guiado até o Auditório Principal e o Mini Auditório</p></div>
-      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-sky-300 text-sm font-medium">08h30–10h30</span><p class="text-sm text-white/75">MasterClass ao vivo com o time Google - Inteligência Artificial</p></div>
-      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-sky-300 text-sm font-medium">10h00–19h00</span><p class="text-sm text-white/75">Ativação prática no Foyer e na Biblioteca <span class="text-violet-300">· liberada após a MasterClass · 🎁 brinde Google só para quem participar</span></p></div>
-      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-amber-300 text-sm font-medium opacity-45">10h30–12h00</span><div><p class="text-sm text-white/75 opacity-45">Workshop prático nos laboratórios de TI e no Lab Dev (64 PCs)</p><p class="mt-1.5"><span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p></div></div>
+      <div class="py-3 flex flex-wrap gap-4"><span class="w-24 shrink-0 text-white/50 text-sm font-medium">08h00</span><p class="text-sm text-white/75">Deslocamento guiado até o Auditório Principal e o Mini Auditório</p></div>
+
+      <div class="ev-row ev-row-master py-4 flex flex-wrap gap-x-4 gap-y-2 items-start">
+        <span class="w-24 shrink-0 text-sky-300 text-sm font-medium">08h30–10h30</span>
+        <div class="flex-1 min-w-[200px]">
+          <span class="ev-chip ev-master mb-1.5">🎤 MasterClass</span>
+          <p class="text-sm text-white/75">Ao vivo com o time Google · Inteligência Artificial</p>
+        </div>
+      </div>
+
+      <div class="ev-row ev-row-ativ py-4 flex flex-wrap gap-x-4 gap-y-2 items-start">
+        <span class="w-24 shrink-0 text-violet-300 text-sm font-medium">10h00–19h00</span>
+        <div class="flex-1 min-w-[200px]">
+          <span class="ev-chip ev-ativ mb-1.5">🧪 Ativação</span>
+          <p class="text-sm text-white/75">Prática na Biblioteca</p>
+          <p class="text-sm text-violet-300 mt-1">Liberada após a MasterClass · 🎁 brinde Google só para quem participar</p>
+        </div>
+      </div>
+
+      <div class="ev-row ev-row-work py-4 flex flex-wrap gap-x-4 gap-y-2 items-start opacity-45">
+        <span class="w-24 shrink-0 text-amber-300 text-sm font-medium">10h30–12h00</span>
+        <div class="flex-1 min-w-[200px]">
+          <span class="ev-chip ev-work mb-1.5">💻 Workshop</span>
+          <p class="text-sm text-white/75">Prático nos laboratórios de TI e no Lab Dev (64 PCs)</p>
+          <p class="mt-1.5"><span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p>
+        </div>
+      </div>
     </div>
+
     <div id="tarde-prog" class="tab-panel glass rounded-2xl p-6 divide-y divide-white/8">
-      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-violet-300 text-sm font-medium">13h30</span><p class="text-sm text-white/75">Deslocamento guiado até Auditório, Mini Auditório e Sala BE 107</p></div>
-      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-violet-300 text-sm font-medium">14h00–15h30</span><p class="text-sm text-white/75">MasterClass da tarde com o time Google</p></div>
-      <div class="py-3 flex gap-4"><span class="w-24 shrink-0 text-amber-300 text-sm font-medium opacity-45">15h30–17h00</span><div><p class="text-sm text-white/75 opacity-45">Workshop prático hands-on nos laboratórios</p><p class="mt-1.5"><span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p></div></div>
+      <div class="py-3 flex flex-wrap gap-4"><span class="w-24 shrink-0 text-white/50 text-sm font-medium">13h30</span><p class="text-sm text-white/75">Deslocamento guiado até Auditório, Mini Auditório e Sala BE 107</p></div>
+
+      <div class="ev-row ev-row-master py-4 flex flex-wrap gap-x-4 gap-y-2 items-start">
+        <span class="w-24 shrink-0 text-sky-300 text-sm font-medium">14h00–15h30</span>
+        <div class="flex-1 min-w-[200px]">
+          <span class="ev-chip ev-master mb-1.5">🎤 MasterClass</span>
+          <p class="text-sm text-white/75">MasterClass da tarde com o time Google</p>
+        </div>
+      </div>
+
+      <div class="ev-row ev-row-ativ py-4 flex flex-wrap gap-x-4 gap-y-2 items-start">
+        <span class="w-24 shrink-0 text-violet-300 text-sm font-medium">10h00–19h00</span>
+        <div class="flex-1 min-w-[200px]">
+          <span class="ev-chip ev-ativ mb-1.5">🧪 Ativação</span>
+          <p class="text-sm text-white/75">Prática na Biblioteca</p>
+          <p class="text-sm text-violet-300 mt-1">Contínua desde a manhã · 🎁 brinde Google só para quem participar</p>
+        </div>
+      </div>
+
+      <div class="ev-row ev-row-work py-4 flex flex-wrap gap-x-4 gap-y-2 items-start opacity-45">
+        <span class="w-24 shrink-0 text-amber-300 text-sm font-medium">15h30–17h00</span>
+        <div class="flex-1 min-w-[200px]">
+          <span class="ev-chip ev-work mb-1.5">💻 Workshop</span>
+          <p class="text-sm text-white/75">Prático hands-on nos laboratórios</p>
+          <p class="mt-1.5"><span class="inline-block text-[11px] font-medium px-2 py-0.5 rounded-full border border-amber-300/40 text-amber-300 whitespace-nowrap">Aguardando aprovação</span></p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -491,6 +568,34 @@ function wireTabs(selector){
 }
 wireTabs('.tab-tbtn');
 wireTabs('.tab-pbtn');
+
+/* Filtro clicável MasterClass / Ativação / Workshop na Programação */
+(function(){
+  const filterBtns = document.querySelectorAll('.ev-filter');
+  const rows = document.querySelectorAll('#programacao .ev-row');
+  let active = 'all';
+
+  function apply(){
+    filterBtns.forEach(b=>{
+      const isActive = active === b.dataset.filter;
+      b.classList.toggle('is-active', isActive);
+      b.classList.toggle('is-dim', active !== 'all' && !isActive);
+      b.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+    rows.forEach(r=>{
+      const match = active === 'all' || r.classList.contains('ev-row-'+active);
+      r.classList.toggle('ev-hidden', !match);
+    });
+  }
+
+  filterBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      active = (active === btn.dataset.filter && btn.dataset.filter !== 'all') ? 'all' : btn.dataset.filter;
+      apply();
+    });
+  });
+  apply();
+})();
 
 const faqs = [
   {q:"Preciso levar meu celular? Como me conecto à internet?", a:"Sim. O D-IA é uma ação BYOD (Bring Your Own Device), por isso o foco são os celulares. Quem estiver com o celular poderá se conectar em uma rede visitante, que será criada no dia pela GSTI."},
